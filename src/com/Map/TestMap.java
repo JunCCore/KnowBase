@@ -26,7 +26,7 @@ public class TestMap {
 			}
 		} else {
 
-			System.out.println("========");
+			System.out.println(">>========");
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
