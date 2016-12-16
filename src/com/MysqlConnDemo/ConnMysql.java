@@ -26,8 +26,6 @@ public class ConnMysql {
 			}
 			//关闭链接
 			rs.close();
-//			DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD).close();
-//			DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD).createStatement().close();
 		} catch (SQLException q) {
 			System.err.println(q.getErrorCode());
 			System.err.println(q.getMessage());
