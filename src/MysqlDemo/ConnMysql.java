@@ -9,7 +9,7 @@ public class ConnMysql {
 	static final String JDBC_URL = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/goonie_prod?characterEncoding=utf8";
 	static final String USER_NAME = "goonie_db";
-	static final String PASSWORD = "kx_goonie_#$%";
+	static final String PASSWORD = "";
 
 	public static void main(String[] args) {
 		try {
