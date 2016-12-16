@@ -14,7 +14,6 @@ public class ConnMysql {
 	public static void main(String[] args) {
 		try {
 			Class.forName(JDBC_URL);
-			// ResultSet rs = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD).createStatement().executeQuery("select * from h_device");
 			ResultSet rs = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD).createStatement().executeQuery("select * from h_device");
 			while (rs.next()) {
 				int id = rs.getInt("id");
