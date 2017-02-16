@@ -12,18 +12,16 @@ public class TestMap {
 		map.put("b", "banana");
 		map.put("c", "cocole");
 		map.put("d", "duang");
-		String str = "aa";
+		String str = "a";
 		String str1 = "a";
 		if (str1.equals(str)) {
 			Iterator<String> it = map.keySet().iterator();
-			while (it.hasNext()) {
-				String mapKey = it.next();
-				if ("c".equals(mapKey)) {
-					continue;
-				}
-				String mapValue = map.get(mapKey);
-				System.out.println("map 的键：" + mapKey + "   map的值：" + mapValue);
-			}
+			/*
+			 * while (it.hasNext()) { String mapKey = it.next(); if ("c".equals(mapKey)) { continue; }
+			 */
+			String mapValue = map.get("c");
+			System.out.println("map 的键：" + mapValue + "   map的值：" + mapValue);
+			// }
 		} else {
 
 			System.out.println(">>>========");
