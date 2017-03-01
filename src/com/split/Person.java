@@ -3,8 +3,6 @@ package com.split;
 /**
  * 实体类
  * 
- * @author root
- *
  */
 public class Person {
 
