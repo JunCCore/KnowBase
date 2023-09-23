@@ -11,7 +11,7 @@ import java.util.Properties;
 public class PropertiesUtil {
 	private final static String filePath = "KnowBase" + File.separator + "WEB-INF" + File.separator + "conf" + File.separator;
 
-	// 获取属性文件值
+	// 获取属性文件值更新
 	public static String getPropertiesValue(String fileName, String Key, String defaultValue) {
 		String file = filePath + fileName;
 		Properties properties = PropertiesUtil.readProperties(file);
