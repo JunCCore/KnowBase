@@ -11,7 +11,7 @@ public class Test {
         // System.out.println(o);
         for (int i = 0; i < 10; i++) {
             System.out.println((Integer) i);
-            System.out.println();
+            System.out.println("12121");
         }
 
     }
