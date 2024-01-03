@@ -16,11 +16,8 @@ public class Test {
 
     }
 
-
     /**
-     * Exception
-     *
-     * @param e
+     *   @param e
      */
     static void doThrow(Exception e) {
         Test.doThrow0(e);
