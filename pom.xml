@@ -10,7 +10,7 @@
 	<groupId>com.cockpit</groupId>
 	<artifactId>cockpit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>cockpit</name>
 	<description>YiDuncontrol cabin project for Spring Boot</description>
 
@@ -245,8 +245,17 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<!-- ⚠️ 请将下面的类名替换成你自己的主类 -->
+							<mainClass>com.util.FactoryTest</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
