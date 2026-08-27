@@ -252,7 +252,7 @@
 					<archive>
 						<manifest>
 							<!-- ⚠️ 请将下面的类名替换成你自己的主类 -->
-							<mainClass>com.util.FactoryTest</mainClass>
+							<mainClass>com.util.FactoryUpload</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
