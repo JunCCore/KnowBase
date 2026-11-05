@@ -12,18 +12,47 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
 
-      - name: 读取今日值班人并推送
+      - name: 安装 Python 依赖
+        run: pip install openpyxl
+
+      - name: 读取今日值班人
+        id: duty
+        run: python get_duty.py >> "$GITHUB_OUTPUT"
+
+      - name: 推送企业微信
+        if: steps.duty.outputs.PERSON != ''
         env:
           WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
+          TODAY: ${{ steps.duty.outputs.TODAY }}
+          PERSON: ${{ steps.duty.outputs.PERSON }}
         run: |
-          CONTENT="大家好，我是机器人，美好的一天开始了"
-          
-          ESCAPED=$(printf '%s' "$CONTENT" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\n/\\n/g')
-          curl -s -X POST "$WECHAT_WEBHOOK_URL" \
-            -H "Content-Type: application/json" \
-            -d "{
-                  \"msgtype\": \"markdown\",
-                  \"markdown\": {
-                    \"content\": \"$ESCAPED\"
-                  }
-                }"
+            WEEKDAY=$(TZ='Asia/Shanghai' date '+%A')
+            case "$WEEKDAY" in
+              Monday) WEEKDAY_CN="周一" ;;
+              Tuesday) WEEKDAY_CN="周二" ;;
+              Wednesday) WEEKDAY_CN="周三" ;;
+              Thursday) WEEKDAY_CN="周四" ;;
+              Friday) WEEKDAY_CN="周五" ;;
+              Saturday) WEEKDAY_CN="周六" ;;
+              Sunday) WEEKDAY_CN="周日" ;;
+              *) WEEKDAY_CN="" ;;
+            esac
+  
+            CONTENT="## 今日值班提醒
+  
+            > 日期：${TODAY} ${WEEKDAY_CN}
+            > 值班人：${PERSON}"
+  
+            PAYLOAD=$(jq -n \
+              --arg content "$CONTENT" \
+              '{msgtype: "markdown", markdown: {content: $content}}')
+  
+            echo "发送内容: $PAYLOAD"
+  
+            RESULT=$(curl -s -X POST "$WECHAT_WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              -d "$PAYLOAD")
+  
+            echo "企业微信返回: $RESULT"
+  
+            echo "$RESULT" | jq -e '.errcode == 0' > /dev/null || exit 1
