@@ -17,11 +17,13 @@ jobs:
           WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
         run: |
           CONTENT="大家好，我是机器人，美好的一天开始了"
+          
+          ESCAPED=$(printf '%s' "$CONTENT" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\n/\\n/g')
           curl -s -X POST "$WECHAT_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
-            -d '{
-              "msgtype": "markdown",
-              "markdown": {
-                "content": "$CONTENT"
-              }
-            }'
+            -d "{
+                  \"msgtype\": \"markdown\",
+                  \"markdown\": {
+                    \"content\": \"$ESCAPED\"
+                  }
+                }"
