@@ -22,6 +22,6 @@ jobs:
             -d '{
               "msgtype": "markdown",
               "markdown": {
-                "content": '"$CONTENT"'
+                "content": "$CONTENT"
               }
             }'
