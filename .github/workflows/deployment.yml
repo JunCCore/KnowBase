@@ -17,7 +17,7 @@ jobs:
           WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
         run: |
           CONTENT=$(
-            "## 今日值班提醒\n\n> 日期：\(20261105) \($w)\n> 值班人：\(张山)")
+            "大家好，我是机器人，美好的一天开始了")
 
           curl -s -X POST "$WECHAT_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
