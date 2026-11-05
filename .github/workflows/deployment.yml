@@ -38,7 +38,7 @@ jobs:
               *) WEEKDAY_CN="" ;;
             esac
   
-            CONTENT="## 今日事项友情小提醒
+            CONTENT="## 今日事项友情提醒
             > 大家好， 
             > 今天是：${TODAY} (${WEEKDAY_CN})
             > 今日值班小伙伴：<@all> @<${PERSON}>~,辛苦了，有问题请随时联系。"
