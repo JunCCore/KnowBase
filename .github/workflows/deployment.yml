@@ -16,9 +16,7 @@ jobs:
         env:
           WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
         run: |
-          CONTENT=$(
-            "大家好，我是机器人，美好的一天开始了")
-
+          CONTENT="大家好，我是机器人，美好的一天开始了"
           curl -s -X POST "$WECHAT_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d '{
