@@ -41,7 +41,7 @@ jobs:
             CONTENT="## 今日值班小提醒
             > 大家好， 
             > 今天是：${TODAY} (${WEEKDAY_CN})
-            > 今日值班小伙伴：${PERSON}~,辛苦了，有问题请随时联系。"
+            > 今日值班小伙伴：@${PERSON}~,辛苦了，有问题请随时联系。"
   
             PAYLOAD=$(jq -n \
               --arg content "$CONTENT" \
