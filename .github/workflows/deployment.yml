@@ -16,13 +16,13 @@ jobs:
         env:
           WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
         run: |
-          CONTENT="大家好，我是机器人，美好的一天开始了"
-          PAYLOAD=$(jq -n \
-             --arg content "$CONTENT" \ 
-            '{msgtype: "markdown", markdown: {content: $content}}')
+            CONTENT="大家好，我是机器人，美好的一天开始了"
+            PAYLOAD=$(jq -n \
+            --arg content "$CONTENT" \
+          '{msgtype: "markdown", markdown: {content: $content}}')
           
           echo "发送内容: $PAYLOAD"
-
+          
           curl -s -X POST "$WECHAT_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d "$PAYLOAD"
