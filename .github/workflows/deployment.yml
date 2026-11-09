@@ -1,0 +1,57 @@
+name: 值班表企业微信推送
+on:
+  schedule:
+    # 每天北京时间 09:00
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python 依赖
+        run: pip install openpyxl
+
+      - name: 读取今日值班人
+        id: duty
+        run: python get_duty.py >> "$GITHUB_OUTPUT"
+
+      - name: 推送企业微信
+        if: steps.duty.outputs.PERSON != ''
+        env:
+          WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
+          TODAY: ${{ steps.duty.outputs.TODAY }}
+          PERSON: ${{ steps.duty.outputs.PERSON }}
+        run: |
+            WEEKDAY=$(TZ='Asia/Shanghai' date '+%A')
+            case "$WEEKDAY" in
+              Monday) WEEKDAY_CN="周一" ;;
+              Tuesday) WEEKDAY_CN="周二" ;;
+              Wednesday) WEEKDAY_CN="周三" ;;
+              Thursday) WEEKDAY_CN="周四" ;;
+              Friday) WEEKDAY_CN="周五" ;;
+              Saturday) WEEKDAY_CN="周六" ;;
+              Sunday) WEEKDAY_CN="周日" ;;
+              *) WEEKDAY_CN="" ;;
+            esac
+  
+            CONTENT="## 今日事项友情提醒
+            > 大家早上好， 
+            > 今天是：${TODAY} (${WEEKDAY_CN})
+            > 今日核心生产问题协助值班小伙伴：${PERSON}~，美好的一天从遇见开始，何老师辛苦了，有问题请随时联系。"
+  
+            PAYLOAD=$(jq -n \
+              --arg content "$CONTENT" \
+              '{msgtype: "markdown", markdown: {content: $content}}')
+  
+            echo "发送内容: $PAYLOAD"
+  
+            RESULT=$(curl -s -X POST "$WECHAT_WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              -d "$PAYLOAD")
+  
+            echo "企业微信返回: $RESULT"
+  
+            echo "$RESULT" | jq -e '.errcode == 0' > /dev/null || exit 1
